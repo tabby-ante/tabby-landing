@@ -5,7 +5,7 @@ import "./globals.css";
 import { SmoothScroll } from "@/components/SmoothScroll";
 import { SiteChrome } from "@/components/SiteChrome";
 import { Ready } from "@/components/Ready";
-import { HelpAgent } from "@/components/HelpAgent";
+import { LazyHelpAgent } from "@/components/LazyHelpAgent";
 import { HashScroller } from "@/components/HashScroller";
 import { PostHogProvider } from "@/components/PostHogProvider";
 
@@ -56,7 +56,7 @@ export default function RootLayout({
           <SmoothScroll />
           <HashScroller />
           <SiteChrome>{children}</SiteChrome>
-          <HelpAgent />
+          <LazyHelpAgent />
           <Analytics />
           <SpeedInsights />
         </PostHogProvider>

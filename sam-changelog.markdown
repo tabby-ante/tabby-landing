@@ -4,6 +4,34 @@ Hey. Quick rundown of what I changed today, in plain English. No tech jargon.
 
 ---
 
+## Homepage speed — FCP & LCP pass
+
+Vercel Speed Insights flagged the homepage with **poor FCP (~3.2s) and LCP (~7.6s)**. CLS/TTFB/INP were already fine.
+
+What was slowing it down:
+
+- The hero headline started **invisible** until a GSAP animation ran — so the browser couldn't count the biggest text as "painted" for several seconds.
+- The phone carousel loaded **all 15 screen images** on first load, even though only ~5 are visible.
+- Below-the-fold sections (FlipStatement, How It Works, Showcase, FAQ) shipped in the **same JS bundle** as the hero.
+- The display font CSS was still **render-blocking** in `<head>`.
+- Lenis smooth-scroll and the help-agent chatbot initialized **immediately** on every page load.
+
+Fixes:
+
+- Hero headline is **visible on first paint**; claw scratches still animate, text no longer waits.
+- Phone carousel only loads images **within ±2 slots** of the active screen; active image gets `priority`.
+- Below-fold sections are **code-split** with `next/dynamic`.
+- Font loads **after idle** via preload hint + deferred stylesheet (fallback font still prevents layout jump).
+- Help agent and Lenis init are **deferred** so they don't compete with hero paint.
+
+**Update:** Reverted the deferred font load — it made the site look like a different typeface (fallback showing too long). Font is back to the normal blocking stylesheet in `<head>`; other speed fixes kept.
+
+Also removed specific pricing numbers sitewide (**1.5%** settlement fee → generic copy; Pro dollar amounts removed) until we finalize pricing.
+
+**Update:** Reframed payments/pricing copy — leads with value ("Split fair. Leave fast.") instead of "A small fee" headline; FAQ and Free tier spell out host-pays-once model; Pro card says "Coming soon" with benefit teaser.
+
+---
+
 ## Speed score — fixed the big "layout jumping" issue
 
 Vercel's Speed Insights dashboard was flagging us with a **0.28 CLS score** (CLS = "how much the page jumps around as it loads"). Anything over 0.25 is "poor" — and ours was sitting right there. The other metrics (load time, time-to-interactive, server response) were all green. Just this one was bleeding red.

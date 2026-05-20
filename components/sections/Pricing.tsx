@@ -3,7 +3,7 @@ import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { motion, AnimatePresence } from "motion/react";
+import { motion } from "motion/react";
 import { Arrow } from "@/components/icons";
 import { track } from "@/lib/analytics";
 
@@ -31,11 +31,6 @@ export function Pricing() {
     }, ref);
     return () => ctx.revert();
   }, []);
-
-  const isAnnual = period === "annual";
-  const proPrice = isAnnual ? "18.99" : "1.99";
-  const proPeriod = isAnnual ? "/year" : "/month";
-  const proSub = isAnnual ? "That's $1.58/mo — save 20%" : "Or $18.99/year — save 20%";
 
   return (
     <section id="pricing" ref={ref} className="relative bg-surface-alt scroll-mt-[120px]">
@@ -108,6 +103,7 @@ export function Pricing() {
                 "Claim items and split with friends",
                 "Pay with Apple Pay, card, bank, or crypto",
                 "Real-time splitting",
+                "Small settlement fee per tab — host pays, friends don't",
               ].map((f) => (
                 <li key={f} className="flex items-start gap-3 text-[1rem] text-body/75">
                   <span className="mt-[9px] w-1.5 h-1.5 rounded-full bg-body/60 flex-shrink-0" />
@@ -173,22 +169,15 @@ export function Pricing() {
             </div>
 
             <div className="relative mt-8">
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={period}
-                  initial={{ y: 14, opacity: 0 }}
-                  animate={{ y: 0, opacity: 1 }}
-                  exit={{ y: -14, opacity: 0 }}
-                  transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-                  className="flex items-baseline gap-3"
-                >
-                  <span className="font-grotesk font-bold tracking-[-0.035em] text-cream" style={{ fontSize: "clamp(3.5rem, 6.4vw, 5.5rem)", lineHeight: 0.9 }}>
-                    ${proPrice}
-                  </span>
-                  <span className="text-cream/55 text-base">{proPeriod}</span>
-                </motion.div>
-              </AnimatePresence>
-              <div className="mt-2 text-[0.9rem] text-accent font-medium italic">{proSub}</div>
+              <p
+                className="font-grotesk font-bold tracking-[-0.035em] text-cream"
+                style={{ fontSize: "clamp(2.5rem, 5vw, 4rem)", lineHeight: 0.95 }}
+              >
+                Coming <span className="italic text-accent">soon</span>
+              </p>
+              <div className="mt-2 text-[0.9rem] text-cream/60 font-medium">
+                Unlimited scans, SmartReceipts, and more — pricing before launch.
+              </div>
             </div>
 
             <ul className="relative mt-10 space-y-4 flex-1">

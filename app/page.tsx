@@ -1,9 +1,30 @@
+import dynamic from "next/dynamic";
 import { Hero } from "@/components/sections/Hero";
-import { FlipStatement } from "@/components/sections/FlipStatement";
-import { HowItWorks } from "@/components/sections/HowItWorks";
-import { Showcase } from "@/components/sections/Showcase";
-import { FAQ } from "@/components/sections/FAQ";
 import { SectionAnalytics } from "@/components/SectionAnalytics";
+
+const FlipStatement = dynamic(() =>
+  import("@/components/sections/FlipStatement").then((m) => ({
+    default: m.FlipStatement,
+  })),
+);
+
+const HowItWorks = dynamic(() =>
+  import("@/components/sections/HowItWorks").then((m) => ({
+    default: m.HowItWorks,
+  })),
+);
+
+const Showcase = dynamic(() =>
+  import("@/components/sections/Showcase").then((m) => ({
+    default: m.Showcase,
+  })),
+);
+
+const FAQ = dynamic(() =>
+  import("@/components/sections/FAQ").then((m) => ({
+    default: m.FAQ,
+  })),
+);
 
 export default function HomePage() {
   return (

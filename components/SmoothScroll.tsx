@@ -32,42 +32,59 @@ function greetDevs() {
 export function SmoothScroll() {
   useEffect(() => {
     if (typeof window === "undefined") return;
-    greetDevs();
-    gsap.registerPlugin(ScrollTrigger);
 
-    // iOS Safari shows/hides its URL bar on scroll, which fires a resize event
-    // that makes ScrollTrigger recalculate pinned sections mid-gesture. This
-    // kills the jitter at pin boundaries.
-    ScrollTrigger.config({ ignoreMobileResize: true });
+    let cancelled = false;
+    let cleanup: (() => void) | undefined;
 
-    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const boot = () => {
+      if (cancelled) return;
+      greetDevs();
+      gsap.registerPlugin(ScrollTrigger);
 
-    const lenis = new Lenis({
-      // lerp-based smoothing tracks the wheel more responsively than the
-      // duration-based mode and feels less "laggy" when entering pinned
-      // sections. 0.09 per frame is smooth without feeling floaty.
-      lerp: reduced ? 1 : 0.09,
-      smoothWheel: !reduced,
-      wheelMultiplier: 1,
-      touchMultiplier: 1.6,
-    });
+      // iOS Safari shows/hides its URL bar on scroll, which fires a resize event
+      // that makes ScrollTrigger recalculate pinned sections mid-gesture. This
+      // kills the jitter at pin boundaries.
+      ScrollTrigger.config({ ignoreMobileResize: true });
 
-    // Expose for imperative resets (e.g. ScrollToTop on client-side nav).
-    (window as unknown as { __lenis?: Lenis }).__lenis = lenis;
+      const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-    lenis.on("scroll", ScrollTrigger.update);
-    const raf = (time: number) => lenis.raf(time * 1000);
-    gsap.ticker.add(raf);
-    gsap.ticker.lagSmoothing(0);
+      const lenis = new Lenis({
+        // lerp-based smoothing tracks the wheel more responsively than the
+        // duration-based mode and feels less "laggy" when entering pinned
+        // sections. 0.09 per frame is smooth without feeling floaty.
+        lerp: reduced ? 1 : 0.09,
+        smoothWheel: !reduced,
+        wheelMultiplier: 1,
+        touchMultiplier: 1.6,
+      });
 
-    const onLoad = () => ScrollTrigger.refresh();
-    window.addEventListener("load", onLoad);
+      // Expose for imperative resets (e.g. ScrollToTop on client-side nav).
+      (window as unknown as { __lenis?: Lenis }).__lenis = lenis;
+
+      lenis.on("scroll", ScrollTrigger.update);
+      const raf = (time: number) => lenis.raf(time * 1000);
+      gsap.ticker.add(raf);
+      gsap.ticker.lagSmoothing(0);
+
+      const onLoad = () => ScrollTrigger.refresh();
+      window.addEventListener("load", onLoad);
+
+      cleanup = () => {
+        gsap.ticker.remove(raf);
+        lenis.destroy();
+        delete (window as unknown as { __lenis?: Lenis }).__lenis;
+        window.removeEventListener("load", onLoad);
+      };
+    };
+
+    const idleId = window.requestIdleCallback?.(boot, { timeout: 1500 });
+    const timeoutId = idleId === undefined ? window.setTimeout(boot, 1) : undefined;
 
     return () => {
-      gsap.ticker.remove(raf);
-      lenis.destroy();
-      delete (window as unknown as { __lenis?: Lenis }).__lenis;
-      window.removeEventListener("load", onLoad);
+      cancelled = true;
+      if (idleId !== undefined) window.cancelIdleCallback(idleId);
+      if (timeoutId !== undefined) window.clearTimeout(timeoutId);
+      cleanup?.();
     };
   }, []);
   return null;

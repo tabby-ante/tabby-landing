@@ -108,13 +108,13 @@ export function Showcase() {
 
       {/* ═══════════════ § 01 + § 02 — Payments + Fee ═══════════════
           One unified editorial spread. Heading + 4-method list on the left,
-          the 1.5% fee + supporting bullets on the right. Both stories live
+          the settlement fee + supporting bullets on the right. Both stories live
           on the same canvas — half the height, all the info. */}
       <div
         data-reverse="false"
         className="sc-block relative mx-auto max-w-[1440px] px-6 lg:px-10 pt-16 lg:pt-24 pb-14 lg:pb-20"
       >
-        <ChapterMark num="01" label="Payments & the fee" tone="dark" />
+        <ChapterMark num="01" label="Payments & pricing" tone="dark" />
 
         <div className="relative mt-8 lg:mt-12 grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-start">
           {/* Methods — left */}
@@ -172,37 +172,33 @@ export function Showcase() {
             </ul>
           </div>
 
-          {/* Fee — right */}
+          {/* Pricing — right */}
           <aside className="lg:col-span-5 relative z-10 lg:pl-8 lg:border-l lg:border-cream/10">
             <div className="sc-body flex items-center gap-3 text-[0.66rem] uppercase tracking-[0.28em] font-semibold text-accent">
               <span aria-hidden className="w-1.5 h-1.5 rounded-full bg-accent" />
-              Settlement fee
+              What you get
             </div>
 
-            <div className="sc-heading mt-3 flex items-baseline gap-2 lg:gap-3">
+            <div className="sc-heading mt-3">
               <span
-                className="font-grotesk font-bold text-cream tabular-nums tracking-[-0.05em] leading-[0.85]"
-                style={{ fontSize: "clamp(4.5rem, 11vw, 9rem)" }}
+                className="font-grotesk font-bold text-cream tracking-[-0.04em] leading-[0.9]"
+                style={{ fontSize: "clamp(2.75rem, 7vw, 5.5rem)" }}
               >
-                1<span className="text-accent">.</span>5
-              </span>
-              <span
-                className="font-grotesk font-bold text-accent leading-[0.9] tracking-[-0.04em]"
-                style={{ fontSize: "clamp(2.25rem, 5.5vw, 4.5rem)" }}
-              >
-                %
+                Split fair.{" "}
+                <span className="italic text-accent">Leave fast.</span>
               </span>
             </div>
             <p className="sc-body mt-1 font-grotesk italic font-medium text-cream/70 text-[0.95rem] lg:text-[1.05rem] leading-[1.4]">
-              one tab, one fee. paid by whoever started it.
+              One small fee on the tab — paid by whoever started it. Everyone
+              else just pays their share.
             </p>
 
             <ul className="sc-body mt-6 lg:mt-7 grid grid-cols-1 gap-2 text-[0.78rem] lg:text-[0.82rem] text-cream/70 leading-tight">
               {[
-                "No per-person fees",
-                "No hidden charges",
-                "Host pays the fee, not the table",
-                "Settles overnight",
+                "Bank transfers settle free",
+                "No fee stacked on every friend",
+                "No surprise charges at checkout",
+                "Restaurant paid before you go home",
               ].map((b, i) => (
                 <li key={b} className="flex items-center gap-3">
                   <span className="font-grotesk font-bold text-accent tabular-nums leading-none w-5 shrink-0 text-[0.78rem]">

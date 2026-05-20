@@ -16,9 +16,16 @@ type Props = {
   shadow?: boolean;
   indicator?: boolean;
   tilt?: boolean;
+  priority?: boolean;
 };
 
-export function Phone({ variant, className, shadow = true, tilt = false }: Props) {
+export function Phone({
+  variant,
+  className,
+  shadow = true,
+  tilt = false,
+  priority = false,
+}: Props) {
   const cardRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -91,7 +98,8 @@ export function Phone({ variant, className, shadow = true, tilt = false }: Props
           src={src}
           alt={`Tabby ${variant} screen`}
           fill
-          sizes="(max-width: 768px) 70vw, 420px"
+          priority={priority}
+          sizes="(max-width: 768px) 70vw, 215px"
           className="object-cover pointer-events-none"
         />
       )}

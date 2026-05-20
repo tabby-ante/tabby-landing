@@ -29,23 +29,11 @@ export function ClawReveal() {
       p.style.strokeDashoffset = `${len}`;
     });
 
-    // Initial text state
-    [line1Ref.current, line2Ref.current].forEach((el) => {
-      if (!el) return;
-      el.style.opacity = "0";
-      el.style.transform = "translateY(16px)";
-    });
-
     if (reduced) {
       paths.forEach((p) => {
         p.style.strokeDashoffset = "0";
       });
       svg.style.opacity = "0";
-      [line1Ref.current, line2Ref.current].forEach((el) => {
-        if (!el) return;
-        el.style.opacity = "1";
-        el.style.transform = "translateY(0)";
-      });
       return;
     }
 
@@ -67,22 +55,6 @@ export function ClawReveal() {
       );
     }
 
-    // Text slides up / fades as the claws drag across
-    if (line1Ref.current) {
-      tl.to(
-        line1Ref.current,
-        { opacity: 1, y: 0, duration: 0.58, ease: "expo.out" },
-        0.18,
-      );
-    }
-    if (line2Ref.current) {
-      tl.to(
-        line2Ref.current,
-        { opacity: 1, y: 0, duration: 0.62, ease: "expo.out" },
-        0.34,
-      );
-    }
-
     return () => {
       tl.kill();
     };
@@ -95,14 +67,12 @@ export function ClawReveal() {
         <span
           ref={line1Ref}
           className="block font-grotesk font-bold text-body text-hero leading-[0.9]"
-          style={{ opacity: 0, transform: "translateY(16px)" }}
         >
           Enjoy the meal,
         </span>
         <span
           ref={line2Ref}
           className="block font-grotesk italic font-medium text-accent text-hero leading-[0.9]"
-          style={{ opacity: 0, transform: "translateY(16px)" }}
         >
           not the math.
         </span>

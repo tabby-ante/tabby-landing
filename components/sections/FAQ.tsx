@@ -23,7 +23,7 @@ const ITEMS = [
   },
   {
     q: "How much does Tabby cost?",
-    a: "Tabby charges a flat 1.5% fee per settlement — no per-person fees, no hidden charges. You only pay when a tab is settled. Join the waitlist and you'll get early access to every feature when we launch.",
+    a: "Tabby is free to join — you only pay a small settlement fee when you close a tab, and whoever started it covers that one charge. Your friends pay their share and nothing extra. Bank transfers are free; no per-person fees, no hidden costs. Join the waitlist for early access when we launch.",
   },
   {
     q: "Is Tabby available outside the US?",

@@ -39,14 +39,10 @@ export function Hero() {
   // Hero entrance fade-ins — wait for the claw swipes to finish drawing so
   // the CTA doesn't clash with the headline animation.
   useEffect(() => {
-    if (prefersReducedMotion()) {
-      [subRef.current, ctaRef.current].forEach((el) => {
-        if (!el) return;
-        el.style.opacity = "1";
-        el.style.transform = "translateY(0)";
-      });
-      return;
-    }
+    if (prefersReducedMotion()) return;
+
+    if (subRef.current) gsap.set(subRef.current, { opacity: 0, y: 14 });
+    if (ctaRef.current) gsap.set(ctaRef.current, { opacity: 0, y: 14 });
 
     const tl = gsap.timeline({ defaults: { ease: "expo.out" } });
     if (subRef.current)
@@ -223,7 +219,6 @@ export function Hero() {
           <p
             ref={subRef}
             className="text-lg md:text-xl text-body/70 max-w-md leading-[1.5]"
-            style={{ opacity: 0, transform: "translateY(14px)" }}
           >
             Split the check and pay it in one app. No chasing payments after
             the meal.
@@ -232,7 +227,6 @@ export function Hero() {
           <div
             ref={ctaRef}
             className="flex items-stretch sm:items-center w-full sm:w-auto max-w-[340px] sm:max-w-none"
-            style={{ opacity: 0, transform: "translateY(14px)" }}
           >
             <Magnetic strength={0.3} className="w-full sm:w-auto">
               <Link
@@ -290,15 +284,15 @@ export function Hero() {
             className="flex items-start gap-5 lg:gap-6 py-6 md:py-8"
             style={{
               transform: `translate3d(${offset}px, 0, 0)`,
-              opacity: hasCenteredTrack ? 1 : 0,
               transition: hasCenteredTrack
-                ? "transform 0.55s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.2s ease-out"
+                ? "transform 0.55s cubic-bezier(0.22, 1, 0.36, 1)"
                 : "none",
               willChange: "transform",
             }}
           >
             {PHONE_VARIANTS.map((variant, i) => {
               const isActive = i === activeIdx;
+              const isNearActive = Math.abs(i - activeIdx) <= 2;
               const isPremium = PREMIUM_VARIANTS.has(variant);
               return (
                 <div
@@ -327,7 +321,14 @@ export function Hero() {
                       }}
                     />
                   )}
-                  <Phone variant={variant} />
+                  {isNearActive ? (
+                    <Phone variant={variant} priority={isActive} />
+                  ) : (
+                    <div
+                      aria-hidden
+                      className="phone-card relative aspect-[9/19.5] rounded-[1.75rem] bg-white/80"
+                    />
+                  )}
                   {isPremium && (
                     <span className="absolute -top-2 -right-2 z-10 bg-accent text-white text-[0.58rem] uppercase tracking-[0.22em] font-bold px-2.5 py-[5px] rounded-full shadow-[0_4px_10px_rgba(255,124,97,0.35)] select-none whitespace-nowrap">
                       Pro · Coming later

@@ -35,13 +35,13 @@ Free — $0, forever
 - All payment methods (Apple Pay, card, bank transfer, crypto)
 - Real-time splitting
 
-Pro — $1.99/month or $18.99/year (annual saves 20%)
+Pro — pricing not finalized yet (launching 2027)
 - Everything in Free
 - Unlimited receipt scans
 - SmartReceipts: AI-powered spending insights, history, and personalized suggestions
 - 7-day free trial, no card required
 
-Both plans include a small processing fee per transaction to cover payment processing. During closed beta, only the Free plan is available.
+Both plans include a small processing fee per transaction to cover payment processing. During closed beta, only the Free plan is available. Do not quote specific fee percentages or Pro dollar amounts — pricing is still being finalized.
 
 Pro-only features: unlimited receipt scans, SmartReceipts, spending insights.
 Everything else described in this knowledge base is available on Free.
@@ -221,7 +221,7 @@ User: fuck
 Agent: I'm here for Tabby questions whenever you have one.
 
 User: is tabby free?
-Agent: Tabby has a Free plan forever, which includes 5 receipt scans per month, all payment methods, and real-time splitting with friends. There's also a Pro plan at $1.99/month or $18.99/year that adds unlimited scans and SmartReceipts (AI spending insights). Both plans include a small processing fee per transaction.
+Agent: Tabby has a Free plan forever, which includes 5 receipt scans per month, all payment methods, and real-time splitting with friends. There's also a Pro tier coming later with unlimited scans and SmartReceipts (AI spending insights). Both plans include a small processing fee per transaction — we're still finalizing the exact numbers.
 
 User: how is this different from venmo?
 Agent: Venmo sends payment requests after someone has already fronted the bill. With Tabby, no one fronts — everyone pays their share first, then a one-time virtual card is generated to pay the restaurant in one tap. No chasing anyone down afterward.
